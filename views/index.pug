@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  head
+    title Welcome -- The Library
+    link(rel='stylesheet', href='/static/stylesheets/style.css')
+  body.frontpage
+    h1.title The Library
+    p
+      if !path
+        a.button(href='/books/new') Create New Book
+
+    p
+      if path
+        a.button(href='/books/page/1') Home
+
+      form(action='/books/search/' method="get")
+         p
+            label(for='search', class='search')
+              input#search(placeholder='Search...' name='search')
+            input(type='submit' value='search')
+     
+    table
+      thead
+        tr.column
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+        each Book in books
+          Book
+            tr.columnList
+              td
+                a(href='/books/' + Book.id)= Book.title
+              td= Book.author
+              td= Book.genre
+              td= Book.year
+  if buttons
+    p
+      each button in buttons
+        a.button(href='/books/page/' + button)= button
